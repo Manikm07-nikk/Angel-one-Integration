@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import './style.css'; // Importing the global styles
+import Login from './Components/Login';
+import MarketData from './Components/MarketData';
 
 function App() {
+  const [token, setToken] = useState('');
+  const [refreshToken, setRefreshToken] = useState('');  // State to store the refresh token
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Angle One Integration</h1>
+      {/* Show Login if no token exists */}
+      {!token ? (
+        <Login setToken={setToken} setRefreshToken={setRefreshToken} />   /* Passing setRefreshToken to Login */
+      ) : (
+        <div>
+          {/* Display Refresh Token and MarketData after login */}
+          <h3>Refresh Token: {refreshToken}</h3>  {/* Display refresh token */}
+          <MarketData token={token} refreshToken={refreshToken} />  {/* Pass refreshToken to MarketData */}
+        </div>
+      )}
     </div>
   );
 }
 
 export default App;
+
